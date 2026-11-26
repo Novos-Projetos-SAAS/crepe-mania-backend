@@ -1,7 +1,7 @@
 import { matchesSeedChecksum } from './seeds/seedChecksum.js';
 
 export const EXPECTED_MIGRATION_TOTAL = 46;
-export const EXPECTED_SEED_TOTAL = 14;
+export const EXPECTED_SEED_TOTAL = 15;
 export const MIGRATION_CHECKSUM_UNVERIFIABLE = 'CHECKSUM_MIGRATION_NAO_VERIFICAVEL';
 
 const CREATED_TABLES_BY_MIGRATION = Object.freeze({

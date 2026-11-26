@@ -16,6 +16,7 @@ export const seedFiles = [
   '012_imagens_pendentes.js',
   '013_permissoes_infinitepay.js',
   '014_configuracao_infinitepay_desabilitada.js',
+  '015_imagens_produtos_crepe_mania.js',
 ];
 
 export async function loadSeedDescriptors(baseUrl = new URL('./versions/', import.meta.url)) {

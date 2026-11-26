@@ -33,10 +33,10 @@ describe('Crepe Mania: fluxo de produto sem pão', () => {
     expect(PRODUTOS).toHaveLength(75);
     for (const tipo of ['CREPE', 'PASTEL', 'PIZZA', 'BEBIDA', 'SUCO', 'ACAI']) expect(PRODUTOS.some((p) => p.tipo === tipo)).toBe(true);
   });
-  it('mantem migrations 001-046 e seeds 001-014 em sequencia numerica', async () => {
+  it('mantem migrations 001-046 e seeds 001-015 em sequencia numerica', async () => {
     const files = (await readdir(new URL('../../src/database/migrations/', import.meta.url))).filter((f) => /^\d{3}_.*\.js$/.test(f)).sort();
     expect(files.map((f) => Number(f.slice(0, 3)))).toEqual(Array.from({ length: 46 }, (_, i) => i + 1));
-    expect(seedFiles.map((f) => Number(f.slice(0, 3)))).toEqual(Array.from({ length: 14 }, (_, i) => i + 1));
+    expect(seedFiles.map((f) => Number(f.slice(0, 3)))).toEqual(Array.from({ length: 15 }, (_, i) => i + 1));
     const tableMigration = await readFile(new URL('../../src/database/migrations/017_itens_pedido.js', import.meta.url), 'utf8');
     expect(tableMigration).not.toMatch(/tipo_pao|acrescimo_pao/);
   });

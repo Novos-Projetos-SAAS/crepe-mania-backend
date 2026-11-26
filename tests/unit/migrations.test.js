@@ -4,6 +4,7 @@ import { seedFiles } from '../../src/database/seeds/seedManifest.js';
 
 const compiler = knex({ client: 'pg' });
 const migrationFiles = Array.from({ length: 46 }, (_, index) => `${String(index + 1).padStart(3, '0')}_`);
+const reservedMigrations = new Set(['011_etapa_reservada.js', '012_etapa_reservada.js', '031_relatorio_reservado.js', '035_relatorio_reservado.js']);
 
 afterAll(async () => compiler.destroy());
 
@@ -38,11 +39,12 @@ describe('migrations PostgreSQL', () => {
       });
       const migration = await import(file);
       await expect(migration.up(fakeKnex)).resolves.toBeUndefined();
-      expect(statements.length, file).toBeGreaterThan(0);
+      if (reservedMigrations.has(file.split('/').at(-1))) expect(statements, file).toHaveLength(0);
+      else expect(statements.length, file).toBeGreaterThan(0);
     }
   });
 
-  it('mantem quatorze seeds versionados sem executar nenhum', () => {
-    expect(seedFiles).toHaveLength(14);
+  it('mantem quinze seeds versionados sem executar nenhum', () => {
+    expect(seedFiles).toHaveLength(15);
   });
 });

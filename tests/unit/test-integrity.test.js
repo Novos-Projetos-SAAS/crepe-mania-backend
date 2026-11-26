@@ -13,7 +13,7 @@ import {
 
 const migrationNames = Array.from({ length: 46 }, (_, index) => `${String(index + 1).padStart(3, '0')}_migration_${index + 1}.js`);
 const migrationRows = (count) => migrationNames.slice(0, count).map((name, index) => ({ id: index + 1, name }));
-const descriptors = Array.from({ length: 14 }, (_, index) => ({
+const descriptors = Array.from({ length: 15 }, (_, index) => ({
   file: `${String(index + 1).padStart(3, '0')}_seed_${index + 1}.js`,
   checksum: String(index + 1).padStart(64, '0'),
 }));
@@ -48,7 +48,7 @@ describe('integridade offline de TEST', () => {
         expect(() => inspectMigrationHistory(rows, migrationNames, { lock, trustedChecksums: { [rows[0].name]: 'outro' } })).toThrow(expect.objectContaining({ code: 'MIGRATION_CHECKSUM_MISMATCH' }));
     });
 
-  it.each([8, 9, 10, 11, 12, 13, 14])('aceita %i seeds somente como prefixo com checksum', (count) => {
+  it.each([8, 9, 10, 11, 12, 13, 14, 15])('aceita %i seeds somente como prefixo com checksum', (count) => {
     const result = inspectSeedHistory(seedRows(count), descriptors);
     expect(result.applied).toBe(count);
     expect(result.pending).toEqual(descriptors.slice(count).map((item) => item.file));
@@ -76,7 +76,8 @@ describe('integridade offline de TEST', () => {
     [43, 12, 'TEST_PREFIXO_ATUALIZAVEL'],
     [42, 14, 'TEST_PREFIXO_ATUALIZAVEL'],
     [45, 14, 'TEST_PREFIXO_ATUALIZAVEL'],
-    [46, 14, 'TEST_COMPLETO'],
+    [46, 14, 'TEST_PREFIXO_ATUALIZAVEL'],
+    [46, 15, 'TEST_COMPLETO'],
   ])('classifica schema com %i migrations e %i seeds como %s', (migrationCount, seedCount, state) => {
     const migrations = inspectMigrationHistory(migrationRows(migrationCount), migrationNames, { lock: migrationCount ? lock : null });
     const seeds = inspectSeedHistory(seedRows(seedCount), descriptors);

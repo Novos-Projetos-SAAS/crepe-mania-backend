@@ -99,7 +99,7 @@ describe('expansão financeira InfinitePay, compilação sem conexão', () => {
   });
 
   it('seeds novos são append-only no manifesto e não incluem secrets ou habilitação', async () => {
-    expect(seedFiles.slice(-2)).toEqual(['013_permissoes_infinitepay.js', '014_configuracao_infinitepay_desabilitada.js']);
+    expect(seedFiles.slice(12, 14)).toEqual(['013_permissoes_infinitepay.js', '014_configuracao_infinitepay_desabilitada.js']);
     const seeds = import.meta.glob('../../src/database/seeds/versions/01[34]_*.js');
     const inserts = [];
     const trx = (table) => ({ insert: (values) => {

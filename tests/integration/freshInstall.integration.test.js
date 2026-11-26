@@ -6,11 +6,11 @@ const db = enabled ? knex({ client: 'pg', connection: process.env.DATABASE_TEST_
 afterAll(async () => { await db?.destroy(); });
 
 describe.skipIf(!enabled)('Crepe Mania: inspecao de banco de testes isolado', () => {
-  it('deve ter recebido 46 migrations e 14 seeds numeradas', async () => {
+  it('deve ter recebido 46 migrations e 15 seeds numeradas', async () => {
     const appliedMigrations = await db('knex_migrations').orderBy('id');
     const appliedSeeds = await db('controle_seeds').orderBy('id');
     expect(appliedMigrations).toHaveLength(46);
-    expect(appliedSeeds).toHaveLength(14);
+    expect(appliedSeeds).toHaveLength(15);
   });
   it('nao deve ter tabelas de paes e deve conter cardapio inicial inativo', async () => {
     const tables = await db('information_schema.tables').where({ table_schema: 'public' }).pluck('table_name');

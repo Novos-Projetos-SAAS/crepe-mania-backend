@@ -68,7 +68,6 @@ export class CatalogService {
     return db.transaction(async (trx) => {
       const before = await this.repository.find(name, id, trx);
       if (!before) throw new AppError('Registro nao encontrado.', 404, 'NOT_FOUND');
-      const merged = { ...before, ...data };
       const row = await this.repository.update(name, id, data, trx);
       if (name === 'produtos') await this.validateProductActivation(row, trx);
       await auditService.registrar({ trx, usuarioId: context.user.id, acao: `${name.toUpperCase()}.EDITAR`, descricao: `Cadastro alterado em ${name}`, recursoTipo: name, recursoId: id, ...context, payload: { antes: before, depois: row } });

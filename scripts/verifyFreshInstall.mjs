@@ -1,4 +1,5 @@
 /** Auditoria estatica que pode rodar mesmo antes de npm ci ou da criacao do banco. */
+/* global URL, console */
 import { readdir, readFile } from 'node:fs/promises';
 import { PRODUTOS } from '../src/database/seeds/versions/011_cardapio_crepe_mania.js';
 import { seedFiles } from '../src/database/seeds/seedManifest.js';
@@ -11,7 +12,7 @@ function checkNumbering(files, total, label) {
   }
 }
 checkNumbering(migrationNames, 46, 'Migrations');
-checkNumbering(seedFiles, 14, 'Seeds');
+checkNumbering(seedFiles, 15, 'Seeds');
 const tableSource = await readFile(new URL('../src/database/migrations/017_itens_pedido.js', import.meta.url), 'utf8');
 if (/tipo_pao|acrescimo_pao/.test(tableSource)) throw new Error('A migration de pedidos ainda exige pao.');
 const productSource = await readFile(new URL('../src/database/migrations/010_produtos.js', import.meta.url), 'utf8');
