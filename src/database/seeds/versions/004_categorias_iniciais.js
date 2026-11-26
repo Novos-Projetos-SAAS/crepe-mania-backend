@@ -7,5 +7,5 @@ export async function apply(trx) {
     ['Açaí', 'acai'], ['Caldo de cana', 'caldo-de-cana'],
     ['Crepes no copo e barcas', 'crepes-no-copo-e-barcas'],
   ];
-  await trx('categorias_produtos').insert(categories.map(([nome, slug], index) => ({ nome, slug, ordem_exibicao: index + 1, ativo: true }))).onConflict('slug').ignore();
+  await trx('categorias_produtos').insert(categories.map(([nome, slug], index) => ({ nome, slug, ordem_exibicao: index + 1, ativo: true }))).onConflict().ignore();
 }
